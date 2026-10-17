@@ -7,7 +7,8 @@ estado.classList.add("ok");
 const NOTA_MINIMA = 6;
 
 function leerNota(id) {
-  return Number(document.getElementById(id).value);
+  // Release 1.1: lectura simplificada de las notas
+  return document.getElementById(id).value;
 }
 
 function calcularPromedio(notas) {
