@@ -1,0 +1,73 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #f4f6fb;
+  color: #1f2933;
+  line-height: 1.6;
+}
+
+header {
+  background: #24292f;
+  color: #fff;
+  text-align: center;
+  padding: 2.5rem 1rem;
+}
+
+.subtitulo {
+  opacity: 0.8;
+  margin-top: 0.5rem;
+}
+
+main {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.tarjeta {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tarjeta h2 {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.tarjeta ul {
+  padding-left: 1.25rem;
+}
+
+#estado.ok {
+  color: #1a7f37;
+  font-weight: bold;
+}
+
+button {
+  margin-top: 0.75rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #0969da;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0550ae;
+}
+
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: #57606a;
+}
