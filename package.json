@@ -1,0 +1,15 @@
+{
+  "name": "pagina-web-prueba-caida",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ejercicio GitFlow: release con bug, detección con Cypress y hotfix",
+  "scripts": {
+    "postinstall": "cypress install",
+    "test": "cypress run",
+    "test:web": "cypress run --env url=https://142563.github.io/PaginaWebPruebaCaida/",
+    "cy:open": "cypress open"
+  },
+  "devDependencies": {
+    "cypress": "^13.17.0"
+  }
+}

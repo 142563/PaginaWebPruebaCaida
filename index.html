@@ -8,20 +8,45 @@
 </head>
 <body>
   <header>
-    <h1>Ejercicio: Página Caída</h1>
-    <p class="subtitulo">Práctica de trabajo colaborativo con Git y GitHub</p>
+    <h1 data-cy="titulo">Ejercicio: Página Caída</h1>
+    <p class="subtitulo">Práctica de trabajo colaborativo con Git, GitFlow y Cypress</p>
   </header>
 
   <main>
     <section class="tarjeta">
       <h2>Estado del sitio</h2>
-      <p id="estado">Comprobando...</p>
+      <p id="estado" data-cy="estado">Comprobando...</p>
+    </section>
+
+    <section class="tarjeta">
+      <h2>Calculadora de promedio</h2>
+      <p class="ayuda">Ingresa tres notas del 0 al 10. Se aprueba con 6 o más.</p>
+
+      <form id="form-notas" data-cy="form-notas">
+        <div class="notas">
+          <label>Nota 1
+            <input type="number" id="nota1" data-cy="nota1" min="0" max="10" step="0.1" required>
+          </label>
+          <label>Nota 2
+            <input type="number" id="nota2" data-cy="nota2" min="0" max="10" step="0.1" required>
+          </label>
+          <label>Nota 3
+            <input type="number" id="nota3" data-cy="nota3" min="0" max="10" step="0.1" required>
+          </label>
+        </div>
+        <button type="submit" data-cy="calcular">Calcular promedio</button>
+      </form>
+
+      <div id="resultado" class="resultado" data-cy="resultado" hidden>
+        <p>Promedio: <strong id="promedio" data-cy="promedio"></strong></p>
+        <p>Estado: <span id="condicion" data-cy="condicion"></span></p>
+      </div>
     </section>
 
     <section class="tarjeta">
       <h2>Contador de visitas (local)</h2>
-      <p>Has abierto esta página <strong id="contador">0</strong> veces.</p>
-      <button id="btn-reiniciar">Reiniciar contador</button>
+      <p>Has abierto esta página <strong id="contador" data-cy="contador">0</strong> veces.</p>
+      <button id="btn-reiniciar" data-cy="reiniciar">Reiniciar contador</button>
     </section>
 
     <section class="tarjeta">
@@ -34,7 +59,7 @@
   </main>
 
   <footer>
-    <p>Publicado con GitHub Pages</p>
+    <p>Versión <span data-cy="version">1.0</span> · Publicado con GitHub Pages</p>
   </footer>
 
   <script src="script.js"></script>

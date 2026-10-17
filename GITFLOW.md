@@ -1,72 +1,35 @@
-# Guía GitFlow: release con error → hotfix → GitHub Pages
+# Guía GitFlow: release con error → Cypress → hotfix → GitHub Pages
 
 Ramas que usamos (todas salen de `main`):
 
 | Rama | Quién | Para qué |
 |------|-------|----------|
 | `main` | Julio | Lo que está publicado en GitHub Pages |
-| `release/1.1` | Compañero | Nueva versión (aquí mete el error) |
-| `hotfix/1.1.1` | Julio | Arreglar el error que llegó a producción |
+| `release/1.1` | Compañero | Nueva versión (trae el bug) |
+| `hotfix/1.1.1` | Julio | Arreglar el bug que llegó a producción |
 
 ```
-main      ●──────────────●─────────────────●   (v1.0 → v1.1 rota → v1.1.1 arreglada)
-           \            /  \               /
-release/1.1 ●──●──────●     \             /
-                              hotfix/1.1.1 ●──●
+main        ●──────────────●─────────────────●   v1.0 → v1.1 (rota) → v1.1.1 (arreglada)
+             \            /  \               /
+release/1.1   ●──── bug ─●    \             /
+                               hotfix/1.1.1 ●── fix
 ```
 
 ---
 
-## Paso 0 — Julio: preparar `main` y GitHub Pages
+## Paso 1 — Compañero: release 1.1 con el bug
 
 ```bash
-git remote add origin https://github.com/TU_USUARIO/ejercicio-pagina-caida.git
-git push -u origin main
-git tag v1.0
-git push origin v1.0
+git clone https://github.com/142563/PaginaWebPruebaCaida.git
+cd PaginaWebPruebaCaida
+npm install
+npm test          # debe salir 6 passing (la v1.0 está bien)
 ```
 
-En GitHub:
-- **Settings → Pages** → Branch: `main`, carpeta `/ (root)` → Save.
-- **Settings → Collaborators** → agregar al compañero.
+Luego le pasa a Codex el archivo [BUG_RELEASE_1.1_CODEX.md](BUG_RELEASE_1.1_CODEX.md).
+Codex crea `release/1.1`, mete el bug, comprueba que Cypress falla y fusiona en `main`.
 
-La página queda en `https://TU_USUARIO.github.io/ejercicio-pagina-caida/`.
-
----
-
-## Paso 1 — Compañero: crea `release/1.1` y mete el error
-
-```bash
-git clone https://github.com/TU_USUARIO/ejercicio-pagina-caida.git
-cd ejercicio-pagina-caida
-git checkout -b release/1.1 main
-```
-
-Error sugerido: en `script.js`, línea 1, cambiar `"estado"` por `"estdo"`:
-
-```js
-const estado = document.getElementById("estdo");
-```
-
-Así el JavaScript falla y la página se queda en "Comprobando..." y el contador en 0.
-
-```bash
-git add script.js
-git commit -m "Release 1.1: cambios en script"
-git push -u origin release/1.1
-```
-
-Luego en GitHub abre un **Pull Request** `release/1.1 → main` y lo fusiona
-(o lo hace por consola):
-
-```bash
-git checkout main
-git merge --no-ff release/1.1 -m "Merge release/1.1"
-git tag v1.1
-git push origin main --tags
-```
-
-👉 GitHub Pages se actualiza en 1–2 minutos y **la página aparece rota**.
+👉 GitHub Pages publica la v1.1 y **la calculadora da resultados absurdos**.
 
 ---
 
@@ -74,21 +37,15 @@ git push origin main --tags
 
 ```bash
 git checkout main
-git pull
+git pull origin main --tags
+npm install
+npm test                 # Cypress local: 4 failing
+npm run test:web         # Cypress contra la página publicada: también falla
 git log --oneline --graph
+git diff v1.0 v1.1       # qué cambió en la release
 ```
 
-Abrir la página publicada → **F12 → Console**. Se ve algo como:
-
-```
-Uncaught TypeError: Cannot set properties of null (setting 'textContent')
-```
-
-Ver qué cambió en la release:
-
-```bash
-git diff v1.0 v1.1
-```
+En GitHub, **Actions → Pruebas Cypress** también aparece en rojo ❌.
 
 ---
 
@@ -98,17 +55,21 @@ git diff v1.0 v1.1
 git checkout -b hotfix/1.1.1 main
 ```
 
-Corregir `script.js` (volver a `"estado"`):
-
-```js
-const estado = document.getElementById("estado");
-```
+Corregir el código hasta que:
 
 ```bash
-git add script.js
-git commit -m "Hotfix 1.1.1: corrige id del elemento estado"
+npm test                 # 6 passing
+```
+
+Subir también la versión a `1.1.1` en el footer de `index.html`.
+
+```bash
+git add .
+git commit -m "Hotfix 1.1.1: corrige cálculo del promedio"
 git push -u origin hotfix/1.1.1
 ```
+
+Actions debe quedar en verde ✅ para `hotfix/1.1.1`.
 
 ---
 
@@ -123,8 +84,11 @@ git tag v1.1.1
 git push origin main --tags
 ```
 
-👉 GitHub Pages se vuelve a publicar y **la página funciona otra vez**
-(revisar en **Actions** o **Settings → Pages** que el deploy terminó).
+Esperar 1–2 minutos y confirmar:
+
+```bash
+npm run test:web         # 6 passing contra la página publicada
+```
 
 ---
 
@@ -136,5 +100,4 @@ git push origin --delete hotfix/1.1.1 release/1.1
 ```
 
 > Nota: en GitFlow "completo" también existe `develop`, y el hotfix se fusiona
-> en `main` **y** en `develop`. En este ejercicio todo sale de `main`, así que
-> solo fusionamos en `main`.
+> en `main` **y** en `develop`. En este ejercicio todo sale de `main`.

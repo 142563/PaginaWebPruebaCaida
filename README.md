@@ -1,26 +1,30 @@
 # Ejercicio: Página Caída
 
-Página web estática publicada con GitHub Pages.
+Página web estática publicada con GitHub Pages, con una **calculadora de promedio**
+y pruebas automáticas con **Cypress**.
+
+👉 https://142563.github.io/PaginaWebPruebaCaida/
 
 ## Dinámica del ejercicio
 
-1. El dueño crea el repositorio y publica la página.
-2. Un compañero (colaborador) sube un cambio que "rompe" la página.
-3. El dueño detecta el error y lo soluciona.
+1. **Julio (dueño)** publica la `v1.0` funcional en `main`.
+2. **El compañero** crea `release/1.1` con un bug, siguiendo
+   [BUG_RELEASE_1.1_CODEX.md](BUG_RELEASE_1.1_CODEX.md) (se lo pasa a Codex).
+3. **Cypress** detecta el error (localmente con `npm test` y en GitHub Actions).
+4. **Julio** lo corrige en `hotfix/1.1.1` y vuelve a publicar.
 
-👉 Guía paso a paso con GitFlow (release → hotfix → GitHub Pages): [GITFLOW.md](GITFLOW.md)
+Guía completa de ramas: [GITFLOW.md](GITFLOW.md)
 
-## Cómo corregir un error subido por otra persona
+## Pruebas con Cypress
 
 ```bash
-git pull                 # traer los cambios del compañero
-git log --oneline        # ver qué commit introdujo el error
-git show <commit>        # ver exactamente qué cambió
+npm install      # instala Cypress
+npm test         # prueba el index.html local
+npm run test:web # prueba la página publicada en GitHub Pages
+npm run cy:open  # abre Cypress con interfaz gráfica
 ```
 
-Luego, una de dos:
+Con la página bien: **6 passing**. Con el bug de la release 1.1: **4 failing**.
 
-- **Revertir el commit completo:** `git revert <commit>`
-- **Corregir a mano:** editar el archivo, luego `git add . && git commit -m "Corrige error"`
-
-Y finalmente `git push`.
+Las pruebas también corren solas en GitHub (**Actions → Pruebas Cypress**) en
+cada push y Pull Request.

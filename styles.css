@@ -52,6 +52,50 @@ main {
   font-weight: bold;
 }
 
+.ayuda {
+  color: #57606a;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.notas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.notas label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 0.9rem;
+  gap: 0.25rem;
+}
+
+.notas input {
+  padding: 0.5rem;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.resultado {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #f6f8fa;
+}
+
+.aprobado {
+  color: #1a7f37;
+  font-weight: bold;
+}
+
+.reprobado {
+  color: #cf222e;
+  font-weight: bold;
+}
+
 button {
   margin-top: 0.75rem;
   padding: 0.5rem 1rem;

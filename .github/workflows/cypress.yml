@@ -1,0 +1,13 @@
+name: Pruebas Cypress
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cypress-io/github-action@v6
